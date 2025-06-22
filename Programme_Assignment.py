@@ -34,6 +34,39 @@ def view_tasks(df):
         print(df.to_string(index=True))
     return df
 
+# Update a task
+def update_task(df):
+    view_tasks(df)
+    try:
+        index = int(input("Enter the index of the task to update: "))
+        if 0 <= index < len(df):
+            print("1. Description")
+            print("2. Priority")
+            print("3. Status")
+            print("4. All")
+            item = int(input("Enter which part you'd like to update: "))
+            if item == 1:
+                df.at[index, "Task"] = input("New description: ")
+            elif item == 2:
+                df.at[index, "Priority"] = input("New priority: ")
+            elif item == 3:
+                df.at[index, "Status"] = input("New status (Pending/Done): ")
+            elif item == 4:
+                df.at[index, "Task"] = input("New description: ")
+                df.at[index, "Priority"] = input("New priority: ")
+                df.at[index, "Status"] = input("New status (Pending/Done): ")
+            else:
+                print("Invalid index.")
+            save_tasks(df)
+            print("Task updated.")
+        else:
+            print("Invalid index.")
+    except ValueError:
+        print("Please enter a number.")
+    return df
+
+
+
 # Main app loop
 def main():
     df = load_tasks()
@@ -52,8 +85,8 @@ def main():
             df = view_tasks(df)
         elif choice == '2':
             df = create_task(df)
-        #elif choice == '3':
-        #    df = update_task(df)
+        elif choice == '3':
+            df = update_task(df)
         #elif choice == '4':
         #    df = delete_task(df)
         #elif choice == '5':
