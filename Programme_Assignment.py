@@ -80,6 +80,17 @@ def delete_task(df):
         print("Please enter a number.")
     return df
 
+# Visualize tasks by priority
+def show_priority_chart(df):
+    if df.empty:
+        print("No data to show.")
+        return
+    priority_counts = df["Priority"].value_counts()
+    priority_counts.plot(kind="bar", title="Tasks by Priority", color=['red', 'orange', 'green'])
+    plt.xlabel("Priority")
+    plt.ylabel("Number of Tasks")
+    plt.tight_layout()
+    plt.show()
 
 # Main app loop
 def main():
@@ -103,8 +114,8 @@ def main():
             df = update_task(df)
         elif choice == '4':
             df = delete_task(df)
-        #elif choice == '5':
-        #    show_priority_chart(df)
+        elif choice == '5':
+            show_priority_chart(df)
         elif choice == '6':
             print("Goodluck!!")
             break
