@@ -65,6 +65,20 @@ def update_task(df):
         print("Please enter a number.")
     return df
 
+# Delete a task
+def delete_task(df):
+    view_tasks(df)
+    try:
+        index = int(input("Enter the index of the task to delete: "))
+        if 0 <= index < len(df):
+            df = df.drop(index).reset_index(drop=True)
+            save_tasks(df)
+            print("Task deleted.")
+        else:
+            print("Invalid index.")
+    except ValueError:
+        print("Please enter a number.")
+    return df
 
 
 # Main app loop
@@ -87,13 +101,13 @@ def main():
             df = create_task(df)
         elif choice == '3':
             df = update_task(df)
-        #elif choice == '4':
-        #    df = delete_task(df)
+        elif choice == '4':
+            df = delete_task(df)
         #elif choice == '5':
         #    show_priority_chart(df)
-        #elif choice == '6':
-        #    print("Goodluck!!")
-        #    break
+        elif choice == '6':
+            print("Goodluck!!")
+            break
         else:
             print("Invalid option. Please try again.")
 
