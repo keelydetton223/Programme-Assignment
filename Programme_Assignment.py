@@ -6,6 +6,10 @@ EXCEL_FILE = "todo_list.xlsx"
 
 # Load or create Excel file
 def load_tasks():
+    if os.path.exists(EXCEL_FILE):
+        return pd.read_excel(EXCEL_FILE)
+    else:
+        return pd.DataFrame(columns=["Task", "Priority", "Status"])
 
 # Save tasks to Excel
 def save_tasks(df):
@@ -19,6 +23,15 @@ def create_task(df):
     df = pd.concat([df, new_task], ignore_index=True)
     save_tasks(df)
     print("Task added successfully.")
+    return df
+
+# Read (view) all tasks
+def view_tasks(df):
+    if df.empty:
+        print("No tasks found.")
+    else:
+        print("\nTo-Do List:")
+        print(df.to_string(index=True))
     return df
 
 # Main app loop
@@ -35,10 +48,19 @@ def main():
 
         choice = input("Choose an option (1-6): ")
 
-        #if choice == '1':
-            #df = view_tasks(df)
+        if choice == '1':
+            df = view_tasks(df)
         elif choice == '2':
             df = create_task(df)
+        #elif choice == '3':
+        #    df = update_task(df)
+        #elif choice == '4':
+        #    df = delete_task(df)
+        #elif choice == '5':
+        #    show_priority_chart(df)
+        #elif choice == '6':
+        #    print("Goodluck!!")
+        #    break
         else:
             print("Invalid option. Please try again.")
 
